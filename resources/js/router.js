@@ -1,17 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
+import AppLayout from '@/Views/Components/AppLayout.vue';
 const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
             path: '/',
-            name: 'Dashboard',
-            component: () => import('@/Views/Pages/Dashboard.vue')
-        },
-        {
-            path: '/profile',
-            name: 'Profile',
-            component: () => import('@/Views/Pages/Profile.vue')
+            component: AppLayout,
+            children: [
+                {
+                    path: '/',
+                    name: 'dashboard',
+                    component: () => import('@/Views/Pages/Dashboard.vue')
+                },
+
+            ]
         },
     ]
 });
