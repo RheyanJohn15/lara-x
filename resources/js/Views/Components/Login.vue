@@ -6,7 +6,6 @@
 
 <template>
     {{ count }}
-
     <button class="bg-black" @click="count++">
         Add
     </button>

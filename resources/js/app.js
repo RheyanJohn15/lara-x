@@ -1,9 +1,10 @@
 import './bootstrap';
 import { createApp } from 'vue'
-import Counter from './Components/Counter.vue'
+import router from './router';
+import App from './App.vue';
 
-const app = createApp()
+const app = createApp(App);
 
-app.component('counter', Counter)
+app.use(router);
 
 app.mount('#app')
