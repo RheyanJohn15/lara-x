@@ -1,20 +1,42 @@
 <?php
 namespace App\Http\Services\v1;
 
-class Authenticate{
-    private $REQ;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Http\ApiValidator\ApiException;
+
+class Authenticate
+{
+    private $RESPONSE;
+
     public function __construct($method, $req)
     {
-        $this->REQ = $req;
-
-        $result = $this->$method();
-
-        return $result;
+        $this->$method($req);
     }
 
-    public function login(){
+    private function login($req)
+    {
+        $credentials = $req->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
+        $userExists = User::where('email', $req->email)->exists();
+
+        if (!$userExists) {
+            throw new ApiException(ApiException::EMAIL_NOT_FOUND);
+        }
+
+        if (Auth::attempt($credentials)) {
+            $req->session()->regenerate();
+            $this->RESPONSE = ['login', "Successfully Logged In", 'null'];
+        } else {
+            throw new ApiException(ApiException::PASSWORD_INCORRECT);
+        }
     }
 
-
+    public function getResult()
+    {
+        return $this->RESPONSE;
+    }
 }

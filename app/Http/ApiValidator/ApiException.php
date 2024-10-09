@@ -6,7 +6,7 @@ class ApiException  extends \Exception {
     public function render(): JsonResponse
     {
         return response()->json([
-            'status' => 'fail',
+            'success' => false,
             'message' => $this->getMessage(),
         ], 400);
     }
@@ -18,5 +18,7 @@ class ApiException  extends \Exception {
     public const NOT_AUTHENTICATED = 'Cannot Access API not Authenticated';
     public const NO_DATA_FOUND = 'No data found in this api request';
     public const REQUEST_PROCESS_ERROR = 'There is something wrong with the request Processor Cannot handle Request';
+    public const EMAIL_NOT_FOUND = 'Your email address is not registered in the system';
+    public const PASSWORD_INCORRECT = "Password did not match to your email";
 
 }

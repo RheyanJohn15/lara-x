@@ -9,7 +9,8 @@ class RequestProcessor {
     {
         switch($context){
             case 'auth':
-                $this->RESPONSE = new Authenticate($req, $method);
+                $result = new Authenticate($method, $req);
+                $this->RESPONSE = $result->getResult();
                 break;
             default:
                 throw new ApiException(ApiException::REQUEST_PROCESS_ERROR);
