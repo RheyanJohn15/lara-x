@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import AppLayout from '@/Views/Components/AppLayout.vue';
+import { isAuthenticated } from '@/Services/helper';
+
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -75,7 +77,23 @@ const router = createRouter({
             name: 'login',
             component: () => import('@/Views/Pages/Auth/Login.vue')
         },
+        {
+            path: '/404-not-authorized',
+            name: 'NotFound',
+            component: () => import('@/Views/Pages/Auth/NotFound.vue')
+        }
     ]
+});
+
+router.beforeEach((to, from, next) => {
+
+    const requiresAuth = !['login', 'NotFound'].includes(to.name);
+
+    if (requiresAuth && !isAuthenticated()) {
+        next({ name: 'NotFound' });
+    } else {
+        next();
+    }
 });
 
 export default router;

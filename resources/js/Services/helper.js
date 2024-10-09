@@ -13,3 +13,9 @@ export const help = {
         return build;
     }
 }
+
+export function isAuthenticated() {
+    const token = localStorage.getItem('api_token');
+
+    return token !== null;
+}
