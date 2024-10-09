@@ -3,6 +3,17 @@ namespace App\Http\ApiValidator;
 use Illuminate\Http\JsonResponse;
 
 class ApiException  extends \Exception {
+
+    /**
+     * Class Validate
+     *
+     * Author: Rheyan John @github RheyanJohn15
+     * Description: This class returns custom made error exception on the api
+     * Date Created: October 10, 2024
+     * Last Updated: October 10, 2024
+     */
+
+
     public function render(): JsonResponse
     {
         return response()->json([

@@ -7,6 +7,15 @@ use App\Http\ApiValidator\ApiException;
 
 class Authenticate
 {
+    /**
+     * Class Validate
+     *
+     * Author: Rheyan John @github RheyanJohn15
+     * Description: Authentication class for all users, handles all authentication logics
+     * Date Created: October 10, 2024
+     * Last Updated: October 10, 2024
+     */
+
     private $RESPONSE;
 
     public function __construct($method, $req)

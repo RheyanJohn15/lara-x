@@ -1,80 +1,98 @@
 <?php
+
 namespace App\Http\ApiValidator;
+
 use App\Http\ApiValidator\ApiException;
 use App\Http\ApiValidator\RequestProcessor;
 use Illuminate\Support\Facades\Auth;
 
-class Validate {
+class Validate
+{
 
+    /**
+     * Class Validate
+     *
+     * Author: Rheyan John @github RheyanJohn15
+     * Description: This class validates an api request from its context to method to its request parameters and authentication
+     * Date Created: October 10, 2024
+     * Last Updated: October 10, 2024
+     */
+    
     private $AUTH = false;
     private $RESPONSE;
+
     public function __construct($req, $context, $method, $authentication)
     {
         //Check If Context is valid
-        if(!array_key_exists($context, self::API_LIST)){
+        if (!array_key_exists($context, self::API_LIST)) {
             throw new ApiException(ApiException::INVALID_CONTEXT);
         }
 
         //Check if Method is valid
-        if(!array_key_exists($method, self::API_LIST[$context])){
+        if (!array_key_exists($method, self::API_LIST[$context])) {
             throw new ApiException(ApiException::INVALID_METHOD);
         }
 
         //Check Request Body for valid parameters
-        if(!self::CheckParam($context, $method, $req)){
+        if (!self::CheckParam($context, $method, $req)) {
             throw new ApiException(ApiException::INVALID_PARAMS);
         }
 
         //Check if the request is authenticated or needs authentication
-        if(self::isAuthRequired($context, $method)){
+        if (self::isAuthRequired($context, $method)) {
             $this->AUTH = true;
         }
 
         //Check If the request is authenticated
-        if($this->AUTH){
+        if ($this->AUTH) {
             $sendRequest = new RequestProcessor($req, $context, $method);
-            if(!self::Authenticate()){
+            if (!self::Authenticate()) {
                 throw new ApiException(ApiException::NOT_AUTHENTICATED);
             }
-           $this->RESPONSE = $sendRequest->getResponse();
-        }else{
+            $this->RESPONSE = $sendRequest->getResponse();
+        } else {
             $sendRequest = new RequestProcessor($req, $context, $method);
             $this->RESPONSE = $sendRequest->getResponse();
         }
     }
 
 
-    private function CheckParam($context, $method, $req){
+    private function CheckParam($context, $method, $req)
+    {
         $paramsList = self::API_LIST[$context][$method]['params'];
         $validity = 0;
-        foreach($paramsList as $param){
-           if($req->$param){
+        foreach ($paramsList as $param) {
+            if ($req->$param) {
                 $validity++;
-           }
+            }
         }
 
-        if($validity == count($paramsList)){
+        if ($validity == count($paramsList)) {
             return true;
         }
 
         return false;
     }
 
-    private function isAuthRequired($context, $method){
+    private function isAuthRequired($context, $method)
+    {
         return self::API_LIST[$context][$method]['isAuth'];
     }
 
-    private function Authenticate(){
+    private function Authenticate()
+    {
         return Auth::check();
     }
 
-    public function getResponse(){
+    public function getResponse()
+    {
         return $this->RESPONSE;
     }
 
+    //List of Valid API's
     private const API_LIST = [
         'auth' => [
-            'login' => ['params'=> ['email', 'password'], 'isAuth' => false]
+            'login' => ['params' => ['email', 'password'], 'isAuth' => false]
         ]
     ];
 }
