@@ -2,6 +2,7 @@
 namespace App\Http\ApiValidator;
 use App\Http\ApiValidator\ApiException;
 use App\Http\ApiValidator\RequestProcessor;
+use Illuminate\Support\Facades\Auth;
 
 class Validate {
 
@@ -28,13 +29,16 @@ class Validate {
         if(self::isAuthRequired($context, $method)){
             $this->AUTH = true;
         }
-        $sendRequest = new RequestProcessor($req, $context, $method);
+
+        //Check If the request is authenticated
         if($this->AUTH){
+            $sendRequest = new RequestProcessor($req, $context, $method);
             if(!self::Authenticate()){
                 throw new ApiException(ApiException::NOT_AUTHENTICATED);
             }
            $this->RESPONSE = $sendRequest->getResponse();
         }else{
+            $sendRequest = new RequestProcessor($req, $context, $method);
             $this->RESPONSE = $sendRequest->getResponse();
         }
     }
@@ -61,7 +65,7 @@ class Validate {
     }
 
     private function Authenticate(){
-
+        return Auth::check();
     }
 
     public function getResponse(){

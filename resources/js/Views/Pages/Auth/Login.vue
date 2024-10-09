@@ -2,22 +2,18 @@
 import { ref } from 'vue';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
-
+import { help } from '@/Services/helper';
 
 const email = ref('');
 const password = ref('');
 
 async function submitLogin(){
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const data = help.dataBuilder(["email", "password"], [email.value, password.value]);
 
     const response = await fetch('/api/post/auth/login/false', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            _token: csrfToken,
-            email: email.value,
-            password: password.value
-        })
+        body: JSON.stringify(data)
     });
 
     const result = await response.json();
