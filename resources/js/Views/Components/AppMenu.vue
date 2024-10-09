@@ -11,7 +11,7 @@ const model = ref([
     {
         label: 'Jumpstart Automation Process',
         items: [
-            { label: 'Project Info', icon: 'pi pi-fw pi-info-circle', to: '/uikit/formlayout' },
+            { label: 'Project Info', icon: 'pi pi-fw pi-info-circle', to: '/automationprocess/projectinfo' },
             { label: 'UI/UX Technology', icon: 'pi pi-fw pi-palette', to: '/uikit/formlayout' },
             { label: 'Login Page Templates', icon: 'pi pi-fw pi-lock', to: '/uikit/input' },
             { label: 'Accounts & Roles', icon: 'pi pi-fw pi-users', to: '/uikit/button', class: 'rotated-icon' },
