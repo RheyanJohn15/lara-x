@@ -102,7 +102,8 @@ class Validate
             'checkauth'=> ['params' => ['empty'], 'isAuth'=> false]
         ],
         'projects' => [
-            'add' => ['params'=> ['name', 'description'], 'isAuth'=> true]
+            'add' => ['params'=> ['name', 'description'], 'isAuth'=> true],
+            'list' => ['params'=> ['empty'], 'isAuth'=> true]
         ]
     ];
 }

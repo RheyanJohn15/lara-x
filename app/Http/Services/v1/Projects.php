@@ -30,6 +30,12 @@ class Projects{
         $this->RESPONSE = ['Added', "Project is Successfully Added", 'null'];
      }
 
+     private function list($req){
+        $list = ProjectInfo::where('user_id', Auth::id())->get();
+
+        $this->RESPONSE = ['Lists', "Fetch all projects", $list];
+     }
+
      public function getResult()
      {
          return $this->RESPONSE;

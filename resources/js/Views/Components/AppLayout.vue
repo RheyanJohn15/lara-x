@@ -3,6 +3,7 @@ import { useLayout } from './composables/layout';
 import { computed, ref, watch } from 'vue';
 import AppSidebar from './AppSidebar.vue';
 import AppTopbar from './AppTopbar.vue';
+import Toast from 'primevue/toast';
 
 const { layoutConfig, layoutState, isSidebarActive, resetMenu } = useLayout();
 
