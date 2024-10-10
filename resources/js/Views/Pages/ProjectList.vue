@@ -2,15 +2,36 @@
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
-import FileUpload from 'primevue/fileupload';
-
 import { ref } from 'vue';
 const display = ref(false);
-const fileupload = ref();
+import Textarea from 'primevue/textarea';
+import FloatLabel from 'primevue/floatlabel';
+const projectName = ref('');
+const projectDescription = ref('');
+const saving = ref(false);
+
+import { help } from '@/Services/helper';
 
 function open() {
     display.value = true;
 }
+
+async function save(){
+    saving.value = true;
+
+    const response = await fetch(`/api/post/projects/add/${help.getApiToken()}`,
+    {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(help.dataBuilder(['name', 'description'], [[projectName.value, projectDescription.value]]))
+    }
+    );
+
+    const result = await response.json();
+
+
+}
+
 </script>
 <template>
     <div className="card">
@@ -85,26 +106,27 @@ function open() {
     </div>
 
     <!--Add Project Modal -->
-    <Dialog header="Add Project " v-model:visible="display" :breakpoints="{ '960px': '75vw' }" :style="{ width: '30vw' }"
-        :modal="true">
-        <div class="card flex flex-col gap-4">
-                    <div class="font-semibold text-xl">Vertical</div>
-                    <div class="flex flex-col gap-2">
-                        <label for="name1">Project Name</label>
-                        <InputText id="name1" placeholder="Project Name" type="text" />
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label for="email1">Project Description</label>
-                        <InputText id="email1" placeholder="Project Description" type="text" />
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label for="age1">Project Logo</label>
-                        <FileUpload name="demo[]" @uploader="onUpload" :multiple="true" accept="image/*" :maxFileSize="1000000" customUpload />
-                    </div>
-                </div>
+    <Dialog header="Add Project " v-model:visible="display" :breakpoints="{ '960px': '75vw' }"
+        :style="{ width: '30vw' }" :modal="true">
+        <form class="card flex flex-col gap-4">
+            <div class="flex flex-col gap-2">
+                <FloatLabel variant="on">
+                    <InputText id="projectName" class="w-full"v-model="projectName" />
+                    <label for="projectName">Project Name</label>
+                </FloatLabel>
+            </div>
+            <div class="flex flex-col gap-2">
+                <FloatLabel variant="on">
+                    <Textarea id="projectDescription" class="w-full" v-model="projectDescription" rows="5" cols="30"
+                        style="resize: none" />
+                    <label for="projectDescription">Project Description</label>
+                </FloatLabel>
+            </div>
+
+        </form>
 
         <template #footer>
-            <Button label="Save" @click="close" />
+            <Button type="button" label="Save Project" icon="pi pi-plus" :loading="saving" @click="save" />
         </template>
     </Dialog>
 </template>

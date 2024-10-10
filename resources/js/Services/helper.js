@@ -11,6 +11,17 @@ export const help = {
         }
 
         return build;
+    },
+    hide: (id, status) => {
+        if(status){
+            document.getElementById(id).classList.add('hidden');
+        }else{
+            document.getElementById(id).classList.remove('hidden');
+        }
+    },
+
+    getApiToken: () => {
+        return sessionStorage.getItem('api_token');
     }
 }
 

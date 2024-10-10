@@ -39,6 +39,7 @@ async function submitLogin() {
         }, 3000);
 
         if(result.success){
+            sessionStorage.setItem('api_token', result.data);
             window.location.href = "/";
         }
 
