@@ -45,6 +45,16 @@ class Authenticate
         }
     }
 
+    private function checkauth($req){
+
+        $auth = false;
+        if (Auth::check()) {
+          $auth = true;
+        }
+
+        $this->RESPONSE = ['checkauth', "User is authenticated", $auth];
+    }
+
     public function getResult()
     {
         return $this->RESPONSE;

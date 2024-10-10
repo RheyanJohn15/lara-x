@@ -14,8 +14,17 @@ export const help = {
     }
 }
 
-export function isAuthenticated() {
-    const token = localStorage.getItem('api_token');
+export async function isAuthenticated() {
+    const check = await fetch('/api/get/auth/checkauth/null', {
+        method: "GET",
+        headers: {"Content-Type": "application/json"},
+    });
 
-    return token !== null;
+    const response = await check.json();
+
+    if(response.data){
+        return true;
+    }
+
+    return false;
 }

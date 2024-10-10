@@ -85,11 +85,12 @@ const router = createRouter({
     ]
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
 
     const requiresAuth = !['login', 'NotFound'].includes(to.name);
+    const auth =  await isAuthenticated();
 
-    if (requiresAuth && !isAuthenticated()) {
+    if (requiresAuth && !auth) {
         next({ name: 'NotFound' });
     } else {
         next();

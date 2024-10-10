@@ -17,7 +17,7 @@ class Validate
      * Date Created: October 10, 2024
      * Last Updated: October 10, 2024
      */
-    
+
     private $AUTH = false;
     private $RESPONSE;
 
@@ -60,6 +60,11 @@ class Validate
     private function CheckParam($context, $method, $req)
     {
         $paramsList = self::API_LIST[$context][$method]['params'];
+
+        if($paramsList[0] == 'empty'){
+            return true;
+        }
+        
         $validity = 0;
         foreach ($paramsList as $param) {
             if ($req->$param) {
@@ -92,7 +97,8 @@ class Validate
     //List of Valid API's
     private const API_LIST = [
         'auth' => [
-            'login' => ['params' => ['email', 'password'], 'isAuth' => false]
+            'login' => ['params' => ['email', 'password'], 'isAuth' => false],
+            'checkauth'=> ['params' => ['empty'], 'isAuth'=> false]
         ]
     ];
 }
