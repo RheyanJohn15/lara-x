@@ -5,7 +5,7 @@ use Illuminate\Http\JsonResponse;
 class ApiException  extends \Exception {
 
     /**
-     * Class Validate
+     * Class Api Exception
      *
      * Author: Rheyan John @github RheyanJohn15
      * Description: This class returns custom made error exception on the api

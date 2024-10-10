@@ -5,6 +5,7 @@ namespace App\Http\ApiValidator;
 use App\Http\ApiValidator\ApiException;
 use App\Http\ApiValidator\RequestProcessor;
 use Illuminate\Support\Facades\Auth;
+use App\Models\PersonalAccessToken;
 
 class Validate
 {
@@ -46,7 +47,7 @@ class Validate
         //Check If the request is authenticated
         if ($this->AUTH) {
             $sendRequest = new RequestProcessor($req, $context, $method);
-            if (!self::Authenticate()) {
+            if (!self::Authenticate($authentication)) {
                 throw new ApiException(ApiException::NOT_AUTHENTICATED);
             }
             $this->RESPONSE = $sendRequest->getResponse();
@@ -64,7 +65,7 @@ class Validate
         if($paramsList[0] == 'empty'){
             return true;
         }
-        
+
         $validity = 0;
         foreach ($paramsList as $param) {
             if ($req->$param) {
@@ -84,9 +85,12 @@ class Validate
         return self::API_LIST[$context][$method]['isAuth'];
     }
 
-    private function Authenticate()
+    private function Authenticate($authentication)
     {
-        return Auth::check();
+        $sepKey = explode('|', $authentication);
+        $apiCheck = PersonalAccessToken::where('id', $sepKey[0])->where('token', $sepKey[1])->first();
+
+        return Auth::check() && $apiCheck;
     }
 
     public function getResponse()
@@ -99,6 +103,9 @@ class Validate
         'auth' => [
             'login' => ['params' => ['email', 'password'], 'isAuth' => false],
             'checkauth'=> ['params' => ['empty'], 'isAuth'=> false]
+        ],
+        'projects' => [
+            'add' => ['params'=> ['name', 'description'], 'isAuth'=> true]
         ]
     ];
 }

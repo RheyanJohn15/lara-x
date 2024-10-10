@@ -8,7 +8,7 @@ use App\Http\ApiValidator\ApiException;
 class Authenticate
 {
     /**
-     * Class Validate
+     * Class Authenticate
      *
      * Author: Rheyan John @github RheyanJohn15
      * Description: Authentication class for all users, handles all authentication logics

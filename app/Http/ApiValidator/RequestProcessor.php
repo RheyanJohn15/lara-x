@@ -9,7 +9,7 @@ class RequestProcessor
 {
 
     /**
-     * Class Validate
+     * Class Request Processor
      *
      * Author: Rheyan John @github RheyanJohn15
      * Description: This class process the request after it undergoes validation

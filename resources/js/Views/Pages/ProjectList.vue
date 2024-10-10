@@ -18,7 +18,7 @@ function open() {
 
 async function save(){
     saving.value = true;
-
+    
     const response = await fetch(`/api/post/projects/add/${help.getApiToken()}`,
     {
         method: "POST",
