@@ -17,8 +17,6 @@ return new class extends Migration
             $table->string('act_action');
             $table->string('act_model');
             $table->string('act_model_id');
-            $table->unsignedBigInteger('access_token_id');
-            $table->foreign('access_token_id')->references('id')->on('personal_access_tokens');
             $table->timestamps();
         });
     }

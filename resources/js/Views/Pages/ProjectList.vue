@@ -22,7 +22,7 @@ function open() {
 
 async function save(){
     saving.value = true;
-    const response = await fetch(`/api/post/projects/add/${help.getApiToken()}`,
+    const response = await fetch(`/api/post/projects/add`,
     {
         method: "POST",
         headers: {"Content-Type": "application/json"},

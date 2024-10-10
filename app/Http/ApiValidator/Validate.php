@@ -22,7 +22,7 @@ class Validate
     private $AUTH = false;
     private $RESPONSE;
 
-    public function __construct($req, $context, $method, $authentication)
+    public function __construct($req, $context, $method)
     {
         //Check If Context is valid
         if (!array_key_exists($context, self::API_LIST)) {
@@ -46,13 +46,13 @@ class Validate
 
         //Check If the request is authenticated
         if ($this->AUTH) {
-            $sendRequest = new RequestProcessor($req, $context, $method, $authentication);
-            if (!self::Authenticate($authentication)) {
+            $sendRequest = new RequestProcessor($req, $context, $method);
+            if (!self::Authenticate()) {
                 throw new ApiException(ApiException::NOT_AUTHENTICATED);
             }
             $this->RESPONSE = $sendRequest->getResponse();
         } else {
-            $sendRequest = new RequestProcessor($req, $context, $method, $authentication);
+            $sendRequest = new RequestProcessor($req, $context, $method);
             $this->RESPONSE = $sendRequest->getResponse();
         }
     }
@@ -85,12 +85,9 @@ class Validate
         return self::API_LIST[$context][$method]['isAuth'];
     }
 
-    private function Authenticate($authentication)
+    private function Authenticate()
     {
-        $sepKey = explode('|', $authentication);
-        $apiCheck = PersonalAccessToken::where('id', $sepKey[0])->where('token', $sepKey[1])->first();
-
-        return Auth::check() && $apiCheck;
+        return Auth::check();
     }
 
     public function getResponse()

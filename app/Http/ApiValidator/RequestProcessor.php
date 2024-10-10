@@ -21,16 +21,16 @@ class RequestProcessor
 
 
     private $RESPONSE;
-    public function __construct($req, $context, $method, $token)
+    public function __construct($req, $context, $method)
     {
         switch ($context) {
             case 'auth':
                 $result = new Authenticate($method, $req);
-                self::LogActivity("Authentication", $token, $result);
+                self::LogActivity("Authentication", $result);
                 break;
             case 'projects':
                 $result = new Projects($method, $req);
-                self::LogActivity("Projects", $token, $result);
+                self::LogActivity("Projects", $result);
                 break;
             default:
                 throw new ApiException(ApiException::REQUEST_PROCESS_ERROR);
@@ -50,10 +50,10 @@ class RequestProcessor
         return $data;
     }
 
-    private function LogActivity($header, $token, $result){
+    private function LogActivity($header, $result){
         $response = $result->getResult();
         if($header != "Authentication"){
-            $log = new ActivityLogger($header, $response[0], $token);
+            $log = new ActivityLogger($header, $response[0]);
             $log->save();
         }
         $this->RESPONSE = $response;

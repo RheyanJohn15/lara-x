@@ -17,7 +17,7 @@ async function submitLogin() {
     const data = help.dataBuilder(["email", "password"], [email.value, password.value]);
     isLoading.value = true;
     try {
-        const response = await fetch('/api/post/auth/login/false', {
+        const response = await fetch('/api/post/auth/login', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
@@ -39,7 +39,6 @@ async function submitLogin() {
         }, 3000);
 
         if(result.success){
-            sessionStorage.setItem('api_token', result.data);
             window.location.href = "/";
         }
 

@@ -10,7 +10,7 @@ class PersonalAccessToken extends Model
     use HasFactory;
     protected $table = 'personal_access_tokens';
     protected $fillable = [
-        'tokenable',
+        'tokenable_id',
         'name',
         'token',
         'abilities',

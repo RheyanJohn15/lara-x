@@ -21,10 +21,6 @@ export const help = {
             document.getElementById(id).classList.remove('hidden');
         }
     },
-    //Get ApiToken
-    getApiToken: () => {
-        return sessionStorage.getItem('api_token');
-    },
     //Parse data and display toast for query return
     parseData: (data, toast) => {
 
@@ -39,7 +35,7 @@ export const help = {
 }
 
 export async function isAuthenticated() {
-    const check = await fetch('/api/get/auth/checkauth/null', {
+    const check = await fetch('/api/get/auth/checkauth', {
         method: "GET",
         headers: {"Content-Type": "application/json"},
     });
