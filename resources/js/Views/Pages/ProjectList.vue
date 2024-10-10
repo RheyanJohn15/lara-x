@@ -3,39 +3,42 @@ import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import { ref } from 'vue';
-const display = ref(false);
+
 import Textarea from 'primevue/textarea';
 import FloatLabel from 'primevue/floatlabel';
+import Toast from 'primevue/toast';
+
 const projectName = ref('');
 const projectDescription = ref('');
 const saving = ref(false);
-
+const display = ref(false);
 import { help } from '@/Services/helper';
+import { useToast } from 'primevue/usetoast';
 
+const toast = useToast();
 function open() {
     display.value = true;
 }
 
 async function save(){
     saving.value = true;
-    
     const response = await fetch(`/api/post/projects/add/${help.getApiToken()}`,
     {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(help.dataBuilder(['name', 'description'], [[projectName.value, projectDescription.value]]))
+        body: JSON.stringify(help.dataBuilder(['name', 'description'], [projectName.value, projectDescription.value]))
     }
     );
 
     const result = await response.json();
 
-
+    help.parseData(result, toast);
 }
 
 </script>
 <template>
     <div className="card">
-
+        <Toast position="bottom-right" group="br" />
         <div class="flex justify-between w-full mb-6">
             <div class="title ">
                 <p class="mb-4 text-4xl font-bold ">

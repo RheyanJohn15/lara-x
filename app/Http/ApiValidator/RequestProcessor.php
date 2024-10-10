@@ -3,6 +3,7 @@
 namespace App\Http\ApiValidator;
 
 use App\Http\Services\v1\Authenticate;
+use App\Http\Services\v1\Projects;
 use App\Http\ApiValidator\ApiException;
 use App\Service\ActivityLogger;
 
@@ -27,6 +28,10 @@ class RequestProcessor
                 $result = new Authenticate($method, $req);
                 self::LogActivity("Authentication", $token, $result);
                 break;
+            case 'projects':
+                $result = new Projects($method, $req);
+                self::LogActivity("Projects", $token, $result);
+                break;
             default:
                 throw new ApiException(ApiException::REQUEST_PROCESS_ERROR);
                 break;
@@ -47,10 +52,10 @@ class RequestProcessor
 
     private function LogActivity($header, $token, $result){
         $response = $result->getResult();
-
-        $log = new ActivityLogger($header, $response[0], $token);
-        $log->save();
-
+        if($header != "Authentication"){
+            $log = new ActivityLogger($header, $response[0], $token);
+            $log->save();
+        }
         $this->RESPONSE = $response;
     }
 

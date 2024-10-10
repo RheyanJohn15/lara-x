@@ -27,7 +27,7 @@ class Projects{
         $proj->user_id = Auth::id();
         $proj->save();
 
-        $this->RESPONSE = ['Add', "Project is Successfully Added", 'null'];
+        $this->RESPONSE = ['Added', "Project is Successfully Added", 'null'];
      }
 
      public function getResult()

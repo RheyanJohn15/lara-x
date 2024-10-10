@@ -1,4 +1,5 @@
 export const help = {
+    //Create a data object for form query with csrf token
     dataBuilder: (params, data)=> {
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
@@ -12,6 +13,7 @@ export const help = {
 
         return build;
     },
+    //Hide or unhide elements
     hide: (id, status) => {
         if(status){
             document.getElementById(id).classList.add('hidden');
@@ -19,9 +21,20 @@ export const help = {
             document.getElementById(id).classList.remove('hidden');
         }
     },
-
+    //Get ApiToken
     getApiToken: () => {
         return sessionStorage.getItem('api_token');
+    },
+    //Parse data and display toast for query return
+    parseData: (data, toast) => {
+
+        let severity = 'error';
+
+        if(data.success){
+            severity = 'success'
+        }
+
+        toast.add({ severity: severity, summary: data.method, detail: data.message, life: 3000 });
     }
 }
 
