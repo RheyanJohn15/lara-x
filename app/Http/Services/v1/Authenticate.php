@@ -39,7 +39,7 @@ class Authenticate
         if (Auth::attempt($credentials)) {
             $req->session()->regenerate();
             $token = $req->user()->createToken("API_Token")->plainTextToken;
-            $this->RESPONSE = ['login', "Successfully Logged In", $token];
+            $this->RESPONSE = ['logged in', "Successfully Logged In", $token];
         } else {
             throw new ApiException(ApiException::PASSWORD_INCORRECT);
         }

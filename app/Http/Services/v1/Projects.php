@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Services\v1;
 use App\Models\ProjectInfo;
-
+use Illuminate\Support\Facades\Auth;
 class Projects{
      /**
      * Class Projects
@@ -24,7 +24,10 @@ class Projects{
 
         $proj->pi_name = $req->name;
         $proj->pi_description = $req->description;
-        
+        $proj->user_id = Auth::id();
+        $proj->save();
+
+        $this->RESPONSE = ['Add', "Project is Successfully Added", 'null'];
      }
 
      public function getResult()

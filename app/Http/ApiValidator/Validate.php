@@ -46,13 +46,13 @@ class Validate
 
         //Check If the request is authenticated
         if ($this->AUTH) {
-            $sendRequest = new RequestProcessor($req, $context, $method);
+            $sendRequest = new RequestProcessor($req, $context, $method, $authentication);
             if (!self::Authenticate($authentication)) {
                 throw new ApiException(ApiException::NOT_AUTHENTICATED);
             }
             $this->RESPONSE = $sendRequest->getResponse();
         } else {
-            $sendRequest = new RequestProcessor($req, $context, $method);
+            $sendRequest = new RequestProcessor($req, $context, $method, $authentication);
             $this->RESPONSE = $sendRequest->getResponse();
         }
     }
