@@ -15,42 +15,42 @@ const router = createRouter({
                     component: () => import('@/Views/Pages/ProjectList.vue')
                 },
                 {
-                    path: '/automationprocess/projectinfo',
+                    path: '/automationprocess/projectinfo/:id?',
                     name: 'project_info',
                     component: () => import('@/Views/Pages/Automation/ProjectInfo.vue')
                 },
                 {
-                    path: '/automationprocess/uiuxtechnology',
+                    path: '/automationprocess/uiuxtechnology/:id?',
                     name: 'ui_ux_technology',
                     component: () => import('@/Views/Pages/Automation/UITechnology.vue')
                 },
                 {
-                    path: '/automationprocess/loginpagetemplate',
+                    path: '/automationprocess/loginpagetemplate/:id?',
                     name: 'login_template',
                     component: () => import('@/Views/Pages/Automation/LoginTemplate.vue')
                 },
                 {
-                    path: '/automationprocess/accountsandroles',
+                    path: '/automationprocess/accountsandroles/:id?',
                     name: 'account_roles',
                     component: () => import('@/Views/Pages/Automation/AccountRoles.vue')
                 },
                 {
-                    path: '/automationprocess/databaseschema',
+                    path: '/automationprocess/databaseschema/:id?',
                     name: 'database_schema',
                     component: () => import('@/Views/Pages/Automation/DatabaseSchema.vue')
                 },
                 {
-                    path: '/automationprocess/managementfeature',
+                    path: '/automationprocess/managementfeature/:id?',
                     name: 'management_feature',
                     component: () => import('@/Views/Pages/Automation/ManagementFeature.vue')
                 },
                 {
-                    path: '/automationprocess/customization',
+                    path: '/automationprocess/customization/:id?',
                     name: 'customization',
                     component: () => import('@/Views/Pages/Automation/Customization.vue')
                 },
                 {
-                    path: '/automationprocess/exportapplication',
+                    path: '/automationprocess/exportapplication/:id?',
                     name: 'export_project',
                     component: () => import('@/Views/Pages/Automation/ExportProject.vue')
                 },
@@ -65,7 +65,7 @@ const router = createRouter({
                     component: () => import('@/Views/Pages/Settings/AccountList.vue')
                 },
                 {
-                    path: '/automationprocess/activitylog',
+                    path: '/activitylog',
                     name: 'activity_logs',
                     component: () => import('@/Views/Pages/Settings/ActivityLog.vue')
                 },
