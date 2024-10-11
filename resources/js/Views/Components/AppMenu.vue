@@ -12,13 +12,13 @@ const model = ref([
         label: 'Jumpstart Automation Process',
         items: [
             { label: 'Project Info', icon: 'pi pi-fw pi-info-circle', to: '/automationprocess/projectinfo' },
-            { label: 'UI/UX Technology', icon: 'pi pi-fw pi-palette', to: '/uikit/formlayout' },
-            { label: 'Login Page Templates', icon: 'pi pi-fw pi-lock', to: '/uikit/input' },
-            { label: 'Accounts & Roles', icon: 'pi pi-fw pi-users', to: '/uikit/button', class: 'rotated-icon' },
-            { label: 'Database Schema', icon: 'pi pi-fw pi-database', to: '/uikit/table' },
-            { label: 'Management Feature', icon: 'pi pi-fw pi-list', to: '/uikit/list' },
-            { label: 'Customization', icon: 'pi pi-fw pi-pencil', to: '/uikit/tree' },
-            { label: 'Export Application', icon: 'pi pi-fw pi-download', to: '/uikit/panel' },
+            { label: 'UI/UX Technology', icon: 'pi pi-fw pi-palette', to: '/automationprocess/uiuxtechnology' },
+            { label: 'Login Page Templates', icon: 'pi pi-fw pi-lock', to: '/automationprocess/loginpagetemplate' },
+            { label: 'Accounts & Roles', icon: 'pi pi-fw pi-users', to: '/automationprocess/accountsandroles', class: 'rotated-icon' },
+            { label: 'Database Schema', icon: 'pi pi-fw pi-database', to: '/automationprocess/databaseschema' },
+            { label: 'Management Feature', icon: 'pi pi-fw pi-list', to: '/automationprocess/managementfeature' },
+            { label: 'Customization', icon: 'pi pi-fw pi-pencil', to: '/automationprocess/customization' },
+            { label: 'Export Application', icon: 'pi pi-fw pi-download', to: '/automationprocess/exportapplication' },
         ]
     },
 
@@ -30,18 +30,18 @@ const model = ref([
             {
                 label: 'Settings',
                 icon: 'pi pi-fw pi-cog',
-                to: '/landing'
+                to: '/settings'
             },
             {
                 label: 'Account List',
                 icon: 'pi pi-fw pi-user',
-                to: '/pages/crud'
+                to: '/settings/accountlist'
             },
 
             {
                 label: 'Activity Logs',
                 icon: 'pi pi-fw pi-history',
-                to: '/pages/crud'
+                to: '/activitylog'
             },
         ]
     },
