@@ -11,7 +11,7 @@ export const help = {
             build[params[i]] = data[i];
         }
 
-        return build;
+        return JSON.stringify(build);
     },
     //Hide or unhide elements
     hide: (id, status) => {

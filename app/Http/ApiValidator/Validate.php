@@ -103,7 +103,8 @@ class Validate
         ],
         'projects' => [
             'add' => ['params'=> ['name', 'description'], 'isAuth'=> true],
-            'list' => ['params'=> ['empty'], 'isAuth'=> true]
+            'list' => ['params'=> ['empty'], 'isAuth'=> true],
+            'delete'=> ['params'=> ['id'], 'isAuth'=> true]
         ]
     ];
 }

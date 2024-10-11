@@ -36,6 +36,14 @@ class Projects{
         $this->RESPONSE = ['Lists', "Fetch all projects", $list];
      }
 
+     private function delete($req){
+        $project = ProjectInfo::where('pi_id', $req->id)->first();
+
+        $project->delete();
+
+        $this->RESPONSE = ['Deleted', "Project is successfully deleted", 'null'];
+     }
+
      public function getResult()
      {
          return $this->RESPONSE;

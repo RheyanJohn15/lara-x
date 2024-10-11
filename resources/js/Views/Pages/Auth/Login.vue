@@ -13,6 +13,7 @@ const message = ref('');
 const notif = ref('');
 
 const isLoading = ref(false);
+
 async function submitLogin() {
     const data = help.dataBuilder(["email", "password"], [email.value, password.value]);
     isLoading.value = true;
@@ -20,7 +21,7 @@ async function submitLogin() {
         const response = await fetch('/api/post/auth/login', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
+            body: data
         });
 
         const result = await response.json();
