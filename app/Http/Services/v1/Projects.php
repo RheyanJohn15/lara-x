@@ -53,7 +53,7 @@ class Projects{
      }
 
      private function uploadlogo($req){
-        $file = $req->input('file');
+        $file = $req->file('file');
 
         if(!in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png'])){
             throw new ApiException(ApiException::INVALID_IMAGE_TYPE);

@@ -4,16 +4,16 @@ import { ref, onMounted } from 'vue';
 import Button from 'primevue/button';
 import ProgressSpinner from 'primevue/progressspinner';
 import Image from 'primevue/image';
-import FileUpload from 'primevue/fileupload';
-
+import { useToast } from 'primevue/usetoast';
+import { help } from "@/Services/helper";
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 const token = ref(csrfToken);
 const route = useRoute();
 const projectId = ref(route.params.id);
 const loadingData = ref(true);
 const src = ref('/assets/images/Logo.png');
-const selectedFile = ref(null);
-
+const toast = useToast();
+const uploading  = ref(false);
 function GoTo() {
     window.location.href = "/";
 }
@@ -32,49 +32,48 @@ async function loadProject() {
 
     if (result.data == null) {
         projectId.value = "";
+    }else{
+        src.value = `/ProjectLogos/${result.data.pi_logo}`;
     }
 
     loadingData.value = false;
+
+
 }
 
-function onFileSelect(event) {
-    selectedFile.value = event.files[0];
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-        src.value = e.target.result;
-    };
-
-    if (selectedFile.value) {
-        reader.readAsDataURL(selectedFile.value);
-    }
+function fileChange(event){
+    const file = event.target.files[0];
+      if (file) {
+        src.value = URL.createObjectURL(file);
+      }
 }
 
 async function uploadPhoto() {
+    uploading.value = true;
     const formData = new FormData();
     formData.append('_token', token.value);
     formData.append('id', projectId.value);
-
-    // Append the selected file to the FormData
-    if (selectedFile.value) {
-        formData.append('file', selectedFile.value);
-    } else {
-        console.error('No file selected.');
-        return; // Exit if no file is selected
+    const fileInput = document.querySelector('input[name="file"]');
+    const file = fileInput.files[0];
+    if (file) {
+        formData.append('file', file);
     }
 
     try {
-        const response = await fetch('/api/post/pro', {
+        const response = await fetch('/api/post/projects/uploadlogo', {
             method: 'POST',
             body: formData,
         });
 
-        const data = await response.json();
-        console.log('Upload success:', data);
+        const result = await response.json();
+
+       help.parseData(result, toast);
+       uploading.value = false;
     } catch (error) {
-        console.error('Upload failed:', error);
+        console.error('Error:', error);
     }
 }
+
 </script>
 
 <template>
@@ -94,23 +93,16 @@ async function uploadPhoto() {
             <h1>Please Wait......</h1>
            </div>
 
-           <div class="w-full grid grid-cols-3">
+           <div v-if="!loadingData" class="w-full grid grid-cols-4">
 
-                <form @submit.prevent="uploadPhoto" class="flex items-center justify-center flex-col gap-4">
+                <form @submit.prevent="uploadPhoto" class="flex items-center justify-center flex-col gap-4" enctype="multipart/form-data">
                     <input type="hidden" name="_token" v-model="token">
                     <input type="hidden" name="id" v-model="projectId">
                     <Image v-if="src" :src="src" alt="Image" width="250" height="250" preview />
-                    <FileUpload
-                        name="demo[]"
-                        mode="basic"
-                        accept="image/*"
-                        @select="onFileSelect"
-                        customUpload
-                        auto
-                        severity="secondary"
-                        class="p-button-outlined"
-                    />
-                    <Button type="submit" label="Upload" />
+                    <div>
+                    <input @change="fileChange" class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" name="file" type="file">
+                    </div>
+                    <Button :loading="uploading" type="submit" label="Upload" />
                 </form>
            </div>
         </div>
