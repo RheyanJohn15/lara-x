@@ -31,5 +31,5 @@ class ApiException  extends \Exception {
     public const REQUEST_PROCESS_ERROR = 'There is something wrong with the request Processor Cannot handle Request';
     public const EMAIL_NOT_FOUND = 'Your email address is not registered in the system';
     public const PASSWORD_INCORRECT = "Password did not match to your email";
-
+    public const INVALID_IMAGE_TYPE = "Image type is Invalid please choose between (png, jpg, jpeg)";
 }

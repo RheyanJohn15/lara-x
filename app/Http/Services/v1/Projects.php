@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Services\v1;
+
+use App\Http\ApiValidator\ApiException;
 use App\Models\ProjectInfo;
 use Illuminate\Support\Facades\Auth;
 class Projects{
@@ -42,6 +44,31 @@ class Projects{
         $project->delete();
 
         $this->RESPONSE = ['Deleted', "Project is successfully deleted", 'null'];
+     }
+
+     private function info($req){
+        $project = ProjectInfo::where('pi_id', $req->id)->first();
+
+        $this->RESPONSE = ['Information', "Get Project Information", $project];
+     }
+
+     private function uploadlogo($req){
+        $file = $req->input('file');
+
+        if(!in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png'])){
+            throw new ApiException(ApiException::INVALID_IMAGE_TYPE);
+        }
+        $extension = $file->getClientOriginalExtension();
+        $newFileName = "P_LOGO$req->id.$extension";
+        $file->move(public_path('ProjectLogos/'), $newFileName);
+
+        $project = ProjectInfo::where('pi_id', $req->id)->first();
+
+        $project->update([
+            'pi_logo' => $newFileName
+        ]);
+
+        $this->RESPONSE = ['Upload Logo', "Logo is successfully updated", 'null'];
      }
 
      public function getResult()

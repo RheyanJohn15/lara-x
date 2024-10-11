@@ -14,7 +14,7 @@ const model = ref([
             { label: 'Project Info', icon: 'pi pi-fw pi-info-circle', to: '/automationprocess/projectinfo' },
             { label: 'UI/UX Technology', icon: 'pi pi-fw pi-palette', to: '/automationprocess/uiuxtechnology' },
             { label: 'Login Page Templates', icon: 'pi pi-fw pi-lock', to: '/automationprocess/loginpagetemplate' },
-            { label: 'Accounts & Roles', icon: 'pi pi-fw pi-users', to: '/automationprocess/accountsandroles', class: 'rotated-icon' },
+            { label: 'Accounts & Roles', icon: 'pi pi-fw pi-users', to: '/automationprocess/accountsandroles'},
             { label: 'Database Schema', icon: 'pi pi-fw pi-database', to: '/automationprocess/databaseschema' },
             { label: 'Management Feature', icon: 'pi pi-fw pi-list', to: '/automationprocess/managementfeature' },
             { label: 'Customization', icon: 'pi pi-fw pi-pencil', to: '/automationprocess/customization' },

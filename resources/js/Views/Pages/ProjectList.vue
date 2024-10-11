@@ -140,7 +140,7 @@ async function confirmDeleteProject(){
         <transition-group name="project-card" tag="div" class="grid grid-cols-5 gap-4">
             <div v-for="project in projectList" :key="project.pi_id"
                 class="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90 w-full project-card">
-                <a href="#" class="block w-full h-full">
+                <a :href="`/automationprocess/projectinfo/${project.pi_id}`" class="block w-full h-full">
                     <img alt="Project photo" :src="'/assets/images/Logo.png'" class="object-cover w-full max-h-40" />
                     <div class="w-full p-4">
                         <p class="mb-2 text-xl font-medium">{{ project.pi_name }}</p>

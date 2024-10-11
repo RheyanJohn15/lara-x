@@ -104,7 +104,9 @@ class Validate
         'projects' => [
             'add' => ['params'=> ['name', 'description'], 'isAuth'=> true],
             'list' => ['params'=> ['empty'], 'isAuth'=> true],
-            'delete'=> ['params'=> ['id'], 'isAuth'=> true]
+            'delete' => ['params'=> ['id'], 'isAuth'=> true],
+            'info' => ['params'=> ['id'], 'isAuth'=> true],
+            'uploadlogo'=> ['params'=> ['id', 'file'], 'isAuth'=> true]
         ]
     ];
 }
