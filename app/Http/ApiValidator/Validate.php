@@ -106,7 +106,8 @@ class Validate
             'list' => ['params'=> ['empty'], 'isAuth'=> true],
             'delete' => ['params'=> ['id'], 'isAuth'=> true],
             'info' => ['params'=> ['id'], 'isAuth'=> true],
-            'uploadlogo'=> ['params'=> ['id', 'file'], 'isAuth'=> true]
+            'uploadlogo'=> ['params'=> ['id', 'file'], 'isAuth'=> true],
+            'update'=> ['params'=> ['id', 'name', 'description'], 'isAuth'=> true],
         ]
     ];
 }

@@ -71,6 +71,16 @@ class Projects{
         $this->RESPONSE = ['Upload Logo', "Logo is successfully updated", 'null'];
      }
 
+     private function update($req){
+         $project = ProjectInfo::where('pi_id', $req->id)->first();
+         $project->update([
+            'pi_name'=> $req->name,
+            'pi_description'=> $req->description
+         ]);
+         
+         $this->RESPONSE = ['Update Project', "Successfully Updated", 'null'];
+     }
+
      public function getResult()
      {
          return $this->RESPONSE;

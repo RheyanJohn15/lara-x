@@ -1,3 +1,5 @@
+import { parseISO, format } from 'date-fns';
+
 export const help = {
     //Create a data object for form query with csrf token
     dataBuilder: (params, data)=> {
@@ -31,6 +33,11 @@ export const help = {
         }
 
         toast.add({ severity: severity, summary: data.method, detail: data.message, life: 3000 });
+    },
+
+    formatDate: date => {
+        const parsedDate = parseISO(date);
+        return format(parsedDate, 'MMMM d, yyyy, h:mm a');
     }
 }
 

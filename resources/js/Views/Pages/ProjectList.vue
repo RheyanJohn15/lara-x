@@ -3,7 +3,6 @@ import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext';
 import { ref, onMounted } from 'vue';
-
 import Textarea from 'primevue/textarea';
 import FloatLabel from 'primevue/floatlabel';
 
@@ -18,6 +17,7 @@ const projectList = ref([]);
 const displayConfirmationDelete = ref(false);
 const projectId = ref('');
 const toast = useToast();
+const empty = ref(false);
 const deleteLoading = ref(false);
 
 function open() {
@@ -48,6 +48,7 @@ async function loadProjects() {
     const response = await fetch('/api/get/projects/list', { method: "GET", headers: { "Content-Type": "application/json" } });
     const data = await response.json();
 
+    empty.value = data.data.length == 0;
     projectList.value = data.data;
 }
 
@@ -66,7 +67,6 @@ function closeConfirmDelete(){
 
 async function confirmDeleteProject(){
     deleteLoading.value = true;
-    toast.add({ severity: "info", summary: "Deleting...", detail: "Please wait for a moment.......", life: 3000 });
 
     const response = await fetch('/api/post/projects/delete',{
         method: "POST",
@@ -137,7 +137,7 @@ async function confirmDeleteProject(){
             </template>
         </Dialog>
 
-        <transition-group name="project-card" tag="div" class="grid grid-cols-5 gap-4">
+        <transition-group v-if="!empty" name="project-card" tag="div" class="grid grid-cols-5 gap-4">
             <div v-for="project in projectList" :key="project.pi_id"
                 class="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90 w-full project-card">
                 <a :href="`/automationprocess/projectinfo/${project.pi_id}`" class="block w-full h-full">
@@ -153,6 +153,7 @@ async function confirmDeleteProject(){
                 </div>
             </div>
         </transition-group>
+
 
     </div>
 
