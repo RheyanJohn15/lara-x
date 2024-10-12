@@ -4,7 +4,9 @@ namespace App\Http\ApiValidator;
 
 use App\Http\Services\v1\Authenticate;
 use App\Http\Services\v1\Projects;
+use App\Http\Services\v1\UITechs;
 use App\Http\ApiValidator\ApiException;
+use App\Models\UITech;
 use App\Service\ActivityLogger;
 
 class RequestProcessor
@@ -31,6 +33,10 @@ class RequestProcessor
             case 'projects':
                 $result = new Projects($method, $req);
                 self::LogActivity("Projects", $result);
+                break;
+            case 'uitech':
+                $result = new UITechs($method, $req);
+                self::LogActivity("UI/UX Technology", $result);
                 break;
             default:
                 throw new ApiException(ApiException::REQUEST_PROCESS_ERROR);

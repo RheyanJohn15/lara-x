@@ -5,19 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectInfo extends Model
+class UITech extends Model
 {
     use HasFactory;
     public $incrementing = false; 
     protected $keyType = 'string'; 
 
-    protected $table = 'project_infos';
-    protected $primaryKey = 'pi_id';
+    protected $table = 'u_i_teches';
+    protected $primaryKey = 'ui_id';
     protected $fillable = [
-        'pi_name',
-        'pi_description',
-        'pi_logo',
-        'user_id'
+        'type',
+        'value',
+        'pi_id',
     ];
 
     protected static function boot()
@@ -25,8 +24,8 @@ class ProjectInfo extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            if (empty($model->pi_id)) {
-                $model->pi_id = (string) \Illuminate\Support\Str::uuid();
+            if (empty($model->ui_id)) {
+                $model->ui_id = (string) \Illuminate\Support\Str::uuid();
             }
         });
     }

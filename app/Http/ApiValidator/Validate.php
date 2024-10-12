@@ -108,6 +108,10 @@ class Validate
             'info' => ['params'=> ['id'], 'isAuth'=> true],
             'uploadlogo'=> ['params'=> ['id', 'file'], 'isAuth'=> true],
             'update'=> ['params'=> ['id', 'name', 'description'], 'isAuth'=> true],
+        ],
+        'uitech'=> [
+            'save' => ['params'=> ['id', 'value', 'context'], 'isAuth'=> true],
+            'get'=> ['params'=> ['id'], 'isAuth'=> true]
         ]
     ];
 }
