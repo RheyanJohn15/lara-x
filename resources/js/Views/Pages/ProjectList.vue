@@ -5,7 +5,7 @@ import InputText from 'primevue/inputtext';
 import { ref, onMounted } from 'vue';
 import Textarea from 'primevue/textarea';
 import FloatLabel from 'primevue/floatlabel';
-
+import ProgressSpinner from 'primevue/progressspinner';
 import { help } from '@/Services/helper';
 import { useToast } from 'primevue/usetoast';
 
@@ -19,6 +19,7 @@ const projectId = ref('');
 const toast = useToast();
 const empty = ref(false);
 const deleteLoading = ref(false);
+const projectLoading = ref(true);
 
 function open() {
     display.value = true;
@@ -52,8 +53,9 @@ async function loadProjects() {
     projectList.value = data.data;
 }
 
-onMounted(() => {
-    loadProjects();
+onMounted(async() => {
+    await loadProjects();
+    projectLoading.value = false;
 });
 
 function confirmDelete(id){
@@ -137,6 +139,11 @@ async function confirmDeleteProject(){
             </template>
         </Dialog>
 
+        <div v-if="projectLoading" class="flex items-center justify-center flex-col w-full h-[50vh]">
+                <ProgressSpinner />
+                <h1>Please Wait......</h1>
+            </div>
+
         <transition-group v-if="!empty" name="project-card" tag="div" class="grid grid-cols-5 gap-4">
             <div v-for="project in projectList" :key="project.pi_id"
                 class="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90 w-full project-card">
@@ -154,6 +161,10 @@ async function confirmDeleteProject(){
             </div>
         </transition-group>
 
+        <div class="w-full h-[60vh] flex items-center justify-center flex-col" v-if="empty">
+            <img :src="'/assets/images/empty.svg'" alt="no project" class="w-1/5">
+            <p class="text-xl">This container is empty..... add some projects</p>
+        </div>
 
     </div>
 

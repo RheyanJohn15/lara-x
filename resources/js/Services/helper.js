@@ -38,6 +38,9 @@ export const help = {
     formatDate: date => {
         const parsedDate = parseISO(date);
         return format(parsedDate, 'MMMM d, yyyy, h:mm a');
+    },
+    goto: location => {
+        window.location.href = location;
     }
 }
 

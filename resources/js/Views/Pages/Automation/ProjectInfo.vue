@@ -149,6 +149,11 @@ async function confirmDeleteProject(){
     projectId.value = false;
 }
 
+
+function next(){
+    help.goto(`/automationprocess/uiuxtechnology/${projectId.value}`);
+}
+
 </script>
 
 <template>
@@ -264,7 +269,7 @@ async function confirmDeleteProject(){
                         </div>
 
                         <div class="flex justify-end w-full">
-                            <Button label="Next" icon="pi pi-arrow-right" iconPos="right" />
+                            <Button label="Next" @click="next" icon="pi pi-arrow-right" iconPos="right" />
                         </div>
                     </div>
                 </div>
